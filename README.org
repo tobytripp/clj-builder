@@ -1,0 +1,35 @@
+* Docker + Leiningen Build Container
+** Why Does This Exist?
+
+   1) A consistent, isolated, build environment is important
+   2) Using this, you can develop in Clojure without the risks of having a
+      JVM/JDK installed on your host system!
+   3) The use of alternative JVM hosts is made simpler
+
+** TODO =Make= Tasks to Create Run-Time Containers
+** TODO Auto-Deploy via Terraform
+** TODO Installation Instructions
+
+   1) Install and run [[https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac][Docker]]
+   2) Create a =docker-compose= configuration:
+      #+BEGIN_SRC yaml :tangle docker-compose.yml
+        version: "3.5"
+        services:
+          clojure:
+            image: clj-builder:latest
+            build:
+              context: .
+              args:
+                - "APP_HOME=${PWD}"
+            volumes:
+              - ./src:${APP_HOME-$PWD}/src
+              - ./test:${APP_HOME-$PWD}/test
+              - ./log:${APP_HOME-$PWD}/log
+            command: repl
+            ports:
+              - "5888:5888"
+      #+END_SRC
+   3) =docker-compose up -d clojure=
+
+** TODO Test Suite =Make= Task
+** TODO =docker secrets= Integration

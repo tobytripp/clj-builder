@@ -1,0 +1,17 @@
+version: "3.5"
+services:
+  clojure:
+    image: clj-builder:latest
+    environment:
+      APP_HOME: "${PWD}"
+    build:
+      context: .
+      args:
+        APP_HOME: "${PWD}"
+    volumes:
+      - ./src:${PWD}/src
+      - ./test:${PWD}/test
+      - ./log:${PWD}/log
+    command: repl
+    ports:
+      - "5888:5888"
