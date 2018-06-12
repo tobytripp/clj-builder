@@ -8,7 +8,7 @@
 
 ** TODO =Make= Tasks to Create Run-Time Containers
 ** TODO Auto-Deploy via Terraform
-** TODO Installation Instructions
+** Installation Instructions
 
    1) Install and run [[https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac][Docker]]
    2) Create a =docker-compose= configuration:
@@ -17,19 +17,28 @@
         services:
           clojure:
             image: clj-builder:latest
+            environment:
+              APP_HOME: "${PWD}"
             build:
               context: .
               args:
-                - "APP_HOME=${PWD}"
+                APP_HOME: "${PWD}"
             volumes:
-              - ./src:${APP_HOME-$PWD}/src
-              - ./test:${APP_HOME-$PWD}/test
-              - ./log:${APP_HOME-$PWD}/log
+              - ./src:${PWD}/src
+              - ./test:${PWD}/test
+              - ./log:${PWD}/log
             command: repl
             ports:
               - "5888:5888"
       #+END_SRC
    3) =docker-compose up -d clojure=
 
-** TODO Test Suite =Make= Task
+** Test Suite =Make= Task
+
+   Run this project’s tests with:
+
+   #+BEGIN_SRC sh :results output
+   make test
+   #+END_SRC
+
 ** TODO =docker secrets= Integration
