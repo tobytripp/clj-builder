@@ -7,7 +7,11 @@
    3) The use of alternative JVM hosts is made simpler
 
 ** TODO =Make= Tasks to Create Run-Time Containers
+   - [ ] TODO
+** TODO boot integration
+   - [ ] TODO
 ** TODO Auto-Deploy via Terraform
+   - [ ] TODO
 ** Installation Instructions
 
    1) Install and run [[https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac][Docker]]
@@ -42,3 +46,5 @@
    #+END_SRC
 
 ** TODO =docker secrets= Integration
+
+   - [ ] TODO
