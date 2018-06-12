@@ -20,7 +20,7 @@
         version: "3.5"
         services:
           clojure:
-            image: clj-builder:latest
+            image: tobytripp/clj-builder:latest
             environment:
               APP_HOME: "${PWD}"
             build:
