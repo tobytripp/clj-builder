@@ -1,6 +1,7 @@
 # -*- mode: dockerfile -*-
 ARG  JAVA_VERSION=8
 FROM delitescere/jdk:${JAVA_VERSION}
+LABEL maintainer="Toby Tripp <toby@tripp.net>"
 
 RUN apk add --no-cache --virtual=.build-dependencies curl coreutils && \
     apk add --no-cache --virtual=.run-dependencies bash ca-certificates

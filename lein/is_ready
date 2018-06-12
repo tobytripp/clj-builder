@@ -1,0 +1,18 @@
+#!/bin/bash
+PORT=5888
+MAX_ATTEMPTS=300
+ATTEMPTS=0
+
+echo "Waiting for REPL on port ${PORT}…"
+
+while ! nc -z localhost $PORT && (( ATTEMPTS < MAX_ATTEMPTS )); do
+    ATTEMPTS=$((ATTEMPTS + 1))
+    sleep 0.5
+done
+
+if  (( ATTEMPTS < MAX_ATTEMPTS )); then
+    echo "REPL ready"
+    exit 0
+else
+    exit 1
+fi
