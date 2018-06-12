@@ -6,13 +6,7 @@
       JVM/JDK installed on your host system!
    3) The use of alternative JVM hosts is made simpler
 
-** TODO =Make= Tasks to Create Run-Time Containers
-   - [ ] TODO
-** TODO boot integration
-   - [ ] TODO
-** TODO Auto-Deploy via Terraform
-   - [ ] TODO
-** Installation Instructions
+** Usage
 
    1) Install and run [[https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac][Docker]]
    2) Create a =docker-compose= configuration:
@@ -36,6 +30,14 @@
               - "5888:5888"
       #+END_SRC
    3) =docker-compose up -d clojure=
+
+
+** TODO =Make= Tasks to Create Run-Time Containers
+   - [ ] TODO
+** TODO boot integration
+   - [ ] TODO
+** TODO Auto-Deploy via Terraform
+   - [ ] TODO
 
 ** Test Suite =Make= Task
 
