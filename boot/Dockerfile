@@ -18,27 +18,30 @@ RUN mkdir -p $BOOT_INSTALL \
   && mv boot.sh $BOOT_INSTALL/boot \
   && chmod 0755 $BOOT_INSTALL/boot
 
-ARG APP_HOME=/usr/src/app
 ENV PATH=$PATH:$BOOT_INSTALL
 ENV BOOT_AS_ROOT=yes
 ENV BOOT_CLOJURE_VERSION=1.9.0
 ENV BOOT_LOCAL_REPO=/usr/local/lib/m2
 
-RUN mkdir -p $APP_HOME
-WORKDIR      $APP_HOME
+COPY docker-entrypoint.sh is_ready $BIN_PATH/
 
-VOLUME $APP_HOME/src           \
-       $APP_HOME/test          \
-       $APP_HOME/target        \
-       $APP_HOME/resources     \
-       $APP_HOME/log
+ONBUILD ARG APP_HOME=/usr/src/app
+ONBUILD ENV APP_HOME $APP_HOME
+ONBUILD RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+
+ONBUILD VOLUME \
+        $APP_HOME/src           \
+        $APP_HOME/test          \
+        $APP_HOME/target        \
+        $APP_HOME/resources     \
+        $APP_HOME/log
+
 EXPOSE 5888
 EXPOSE 80
 EXPOSE 8080
 
-RUN boot
-
-COPY docker-entrypoint.sh is_ready $BIN_PATH/
+ONBUILD RUN boot
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["repl"]
