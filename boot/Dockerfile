@@ -6,11 +6,13 @@ LABEL maintainer="Toby Tripp <toby@tripp.net>"
 RUN apk add --no-cache --virtual=.build-dependencies curl coreutils && \
     apk add --no-cache --virtual=.run-dependencies bash ca-certificates
 
+ENV BOOT_VERSION=2.7.2
+ENV BOOT_INSTALL=/usr/local/bin/
 ENV BIN_PATH /usr/local/bin
 RUN mkdir -p $BIN_PATH
 
 RUN mkdir -p $BOOT_INSTALL \
-  && wget -q https://github.com/boot-clj/boot-bin/releases/download/2.7.2/boot.sh \
+  && curl -fLsS https://github.com/boot-clj/boot-bin/releases/download/2.7.2/boot.sh > boot.sh \
   && echo "Comparing installer checksum..." \
   && echo "f717ef381f2863a4cad47bf0dcc61e923b3d2afb *boot.sh" | sha1sum -c - \
   && mv boot.sh $BOOT_INSTALL/boot \
