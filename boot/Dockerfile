@@ -28,7 +28,6 @@ COPY docker-entrypoint.sh is_ready $BIN_PATH/
 ONBUILD ARG APP_HOME=/usr/src/app
 ONBUILD ENV APP_HOME $APP_HOME
 ONBUILD RUN mkdir -p $APP_HOME
-WORKDIR $APP_HOME
 
 ONBUILD VOLUME \
         $APP_HOME/src           \
@@ -41,6 +40,7 @@ EXPOSE 5888
 EXPOSE 80
 EXPOSE 8080
 
+ONBUILD WORKDIR $APP_HOME
 ONBUILD RUN boot
 
 ENTRYPOINT ["docker-entrypoint.sh"]
