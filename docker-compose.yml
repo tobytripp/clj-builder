@@ -1,7 +1,7 @@
 version: "3.5"
 services:
-  clojure:
-    image: clj-builder:latest
+  boot:
+    image: clj-builder:boot
     environment:
       APP_HOME: "${PWD}"
     build:

@@ -1,0 +1,1 @@
+FROM clj-builder:boot

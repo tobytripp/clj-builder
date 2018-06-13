@@ -16,7 +16,8 @@ RUN mkdir -p $BOOT_INSTALL \
   && echo "Comparing installer checksum..." \
   && echo "f717ef381f2863a4cad47bf0dcc61e923b3d2afb *boot.sh" | sha1sum -c - \
   && mv boot.sh $BOOT_INSTALL/boot \
-  && chmod 0755 $BOOT_INSTALL/boot
+  && chmod 0755 $BOOT_INSTALL/boot \
+  && apk del .build-dependencies
 
 ENV PATH=$PATH:$BOOT_INSTALL
 ENV BOOT_AS_ROOT=yes
@@ -28,12 +29,11 @@ COPY docker-entrypoint.sh is_ready $BIN_PATH/
 ONBUILD ARG APP_HOME=/usr/src/app
 ONBUILD ENV APP_HOME $APP_HOME
 ONBUILD RUN mkdir -p $APP_HOME
-
 ONBUILD VOLUME \
-        $APP_HOME/src           \
-        $APP_HOME/test          \
-        $APP_HOME/target        \
-        $APP_HOME/resources     \
+        $APP_HOME/src       \
+        $APP_HOME/test      \
+        $APP_HOME/target    \
+        $APP_HOME/resources \
         $APP_HOME/log
 
 EXPOSE 5888
