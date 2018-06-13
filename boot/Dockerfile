@@ -8,8 +8,9 @@ RUN apk add --no-cache --virtual=.build-dependencies curl coreutils && \
 
 ENV BOOT_VERSION=2.7.2
 ENV BOOT_INSTALL=/usr/local/bin/
+ENV BOOT_HOME=/usr/local/share/boot
 ENV BIN_PATH /usr/local/bin
-RUN mkdir -p $BIN_PATH
+RUN mkdir -p $BIN_PATH $BOOT_HOME
 
 RUN mkdir -p $BOOT_INSTALL \
   && curl -fLsS https://github.com/boot-clj/boot-bin/releases/download/2.7.2/boot.sh > boot.sh \
@@ -24,6 +25,7 @@ ENV BOOT_AS_ROOT=yes
 ENV BOOT_CLOJURE_VERSION=1.9.0
 ENV BOOT_LOCAL_REPO=/usr/local/lib/m2
 
+COPY profile.boot $BOOT_HOME/
 COPY docker-entrypoint.sh is_ready $BIN_PATH/
 
 ONBUILD ARG APP_HOME=/usr/src/app

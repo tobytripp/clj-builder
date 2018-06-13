@@ -9,6 +9,7 @@
   3. The use of alternative JVM hosts is made simpler.
   4. This container initializes and starts a headless REPL for development.
   5. It’s small coming in around 200M or less for my use-cases.
+
   ## Usage
 
   1. Install and run [Docker](https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac)

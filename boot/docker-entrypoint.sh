@@ -5,6 +5,6 @@ export BOOT="boot"
 
 case "$1" in
     'bash')    exec bash ;;
-    'repl')    exec $BOOT repl -s wait ;;
+    'repl')    exec $BOOT repl -s wait -p 5888 -b 0.0.0.0 ;;
     *)         exec $BOOT $@ ;;
 esac
