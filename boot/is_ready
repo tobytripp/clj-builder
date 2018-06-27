@@ -1,18 +1,27 @@
 #!/bin/bash
-PORT=5888
 MAX_ATTEMPTS=300
 ATTEMPTS=0
 
-echo "Waiting for REPL on port ${PORT}…"
+USAGE="Usage: $0 PORT [PORT…]"
+if [ "$#" == "0" ]; then echo $USAGE && exit 1; fi
 
-while ! nc -z localhost $PORT && (( ATTEMPTS < MAX_ATTEMPTS )); do
-    ATTEMPTS=$((ATTEMPTS + 1))
-    sleep 0.5
+i=1
+sp="/-\|"
+echo -n ' '
+
+while (( "$#" )); do
+    PORT=$1; shift
+    echo "Waiting for connection on port ${PORT}…"
+
+    while ! nc -z localhost $PORT && (( ATTEMPTS < MAX_ATTEMPTS )); do
+        ATTEMPTS=$((ATTEMPTS + 1))
+        printf "\b${sp:i++%${#sp}:1}"
+        sleep 0.5
+    done
+
+    if  (( ATTEMPTS < MAX_ATTEMPTS )); then
+        echo "Connection ready"
+    else
+        exit 1
+    fi
 done
-
-if  (( ATTEMPTS < MAX_ATTEMPTS )); then
-    echo "REPL ready"
-    exit 0
-else
-    exit 1
-fi
