@@ -16,7 +16,8 @@
 
   :plugins        [[lein-pprint "1.1.1"]]
 
-  :profiles {:uberjar {:aot :all}}
+  :profiles {:repl {:dependencies [[cider/cider-nrepl "0.18.0-SNAPSHOT"]]}
+             :uberjar {:aot :all}}
   :global-vars {*warn-on-reflection* true
                 *assert* true}
   :jvm-opts ["-Xmx1g"]
