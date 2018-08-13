@@ -2,15 +2,20 @@
 MAX_ATTEMPTS=300
 ATTEMPTS=0
 
-USAGE="Usage: $0 PORT [PORT…]"
-if [ "$#" == "0" ]; then echo $USAGE && exit 1; fi
-
 i=1
 sp="/-\|"
 echo -n ' '
 
-while (( "$#" )); do
-    PORT=$1; shift
+USAGE="Usage: $0 [PORT…]\n\tDefault PORT=5888\n"
+
+PORTS = (${ARGV[@]})
+if [ "$#" == "0" ]; then
+    PORTS = (5888)
+    echo $USAGE
+fi
+
+for (( i=0; i < ${#PORTS[@]}; i++ )); do
+    PORT=${PORTS[$i]}
     echo "Waiting for connection on port ${PORT}…"
 
     while ! nc -z localhost $PORT && (( ATTEMPTS < MAX_ATTEMPTS )); do
