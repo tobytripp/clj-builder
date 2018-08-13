@@ -8,9 +8,9 @@ echo -n ' '
 
 USAGE="Usage: $0 [PORT…]\n\tDefault PORT=5888\n"
 
-PORTS = (${ARGV[@]})
+PORTS=(${ARGV[@]})
 if [ "$#" == "0" ]; then
-    PORTS = (5888)
+    PORTS=(5888)
     echo $USAGE
 fi
 
