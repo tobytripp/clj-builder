@@ -4,7 +4,7 @@ FROM delitescere/jdk:${JAVA_VERSION}
 LABEL maintainer="Toby Tripp <toby@tripp.net>"
 
 RUN apk add --no-cache --virtual=.build-dependencies curl coreutils && \
-    apk add --no-cache --virtual=.run-dependencies bash rlwrap  ca-certificates
+    apk add --no-cache --virtual=.run-dependencies bash ca-certificates
 
 ENV BIN_PATH /usr/local/bin
 RUN mkdir -p $BIN_PATH
