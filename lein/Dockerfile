@@ -3,18 +3,25 @@ ARG  JAVA_VERSION=8
 FROM delitescere/jdk:${JAVA_VERSION}
 LABEL maintainer="Toby Tripp <toby@tripp.net>"
 
-RUN apk add --no-cache --virtual=.build-dependencies curl coreutils && \
-    apk add --no-cache --virtual=.run-dependencies bash ca-certificates && \
-    apk add rlwrap --update-cache \
-      --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ \
-      --allow-untrusted
+ENV CLOJURE_VERSION=1.9.0.391
+
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> \
+      /etc/apk/repositories
+RUN echo '@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> \
+      /etc/apk/repositories
+
+RUN apk add -U --upgrade apk-tools
+RUN apk add --no-cache --virtual=.build-dependencies coreutils && \
+    apk add --no-cache bash curl ca-certificates rlwrap@testing
 
 ENV BIN_PATH /usr/local/bin
 RUN mkdir -p $BIN_PATH
 
-RUN curl -O https://download.clojure.org/install/linux-install-1.9.0.391.sh \
- && chmod +x linux-install-1.9.0.391.sh \
- && ./linux-install-1.9.0.391.sh
+WORKDIR /tmp
+
+RUN curl -O https://download.clojure.org/install/linux-install-$CLOJURE_VERSION.sh \
+ && chmod +x linux-install-$CLOJURE_VERSION.sh \
+ && ./linux-install-$CLOJURE_VERSION.sh
 
 ENV LEIN_ROOT true
 ENV LEIN_DOWNLOAD_SHA f60e5faa00f97ed756af0433856945c1cbe4c53d3bde9fcbcd1d0df8166c0b386e7b28165af8e7d08ba93a78c8f936bd04068d25cc23d9fb9700d25b79d9d6eb
