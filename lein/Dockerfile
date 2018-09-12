@@ -4,10 +4,14 @@ FROM delitescere/jdk:${JAVA_VERSION}
 LABEL maintainer="Toby Tripp <toby@tripp.net>"
 
 RUN apk add --no-cache --virtual=.build-dependencies curl coreutils && \
-    apk add --no-cache --virtual=.run-dependencies bash ca-certificates
+    apk add --no-cache --virtual=.run-dependencies bash rlwrap  ca-certificates
 
 ENV BIN_PATH /usr/local/bin
 RUN mkdir -p $BIN_PATH
+
+RUN curl -O https://download.clojure.org/install/linux-install-1.9.0.391.sh \
+ && chmod +x linux-install-1.9.0.391.sh \
+ && ./linux-install-1.9.0.391.sh
 
 ENV LEIN_ROOT true
 ENV LEIN_DOWNLOAD_SHA f60e5faa00f97ed756af0433856945c1cbe4c53d3bde9fcbcd1d0df8166c0b386e7b28165af8e7d08ba93a78c8f936bd04068d25cc23d9fb9700d25b79d9d6eb
