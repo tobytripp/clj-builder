@@ -3,8 +3,6 @@ ARG  JAVA_VERSION=8
 FROM delitescere/jdk:${JAVA_VERSION}
 LABEL maintainer="Toby Tripp <toby@tripp.net>"
 
-ENV CLOJURE_VERSION=1.9.0.391
-
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> \
       /etc/apk/repositories
 RUN echo '@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> \
@@ -16,10 +14,13 @@ RUN apk add --no-cache --virtual=.build-dependencies coreutils && \
 
 ENV BIN_PATH /usr/local/bin
 RUN mkdir -p $BIN_PATH
-
 WORKDIR /tmp
 
+ENV CLOJURE_VERSION=1.9.0.391
+ENV CLOJURE_SHA=36fac1386e2c403e1e16a48f373f33c85ace537753c68270f0af57e0dc5affdf6c1b54297393d3ccf2ef417c77d08389c654553694582fe518c70e453014365b
+
 RUN curl -O https://download.clojure.org/install/linux-install-$CLOJURE_VERSION.sh \
+ && echo CLOJURE_SHA linux-install-$CLOJURE_VERSION.sh | sha512sum -c - \
  && chmod +x linux-install-$CLOJURE_VERSION.sh \
  && ./linux-install-$CLOJURE_VERSION.sh
 
