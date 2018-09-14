@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export GATEWAY=`netstat -nr | awk '/^0\.0\.0\.0/ { print $2 }'`
-export LEIN="lein update-in :local-repo str \"${M2_REPO:-.m2}\" --"
+export LEIN="lein"
 
 case "$1" in
     'bash')    exec bash ;;
